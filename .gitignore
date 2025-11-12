@@ -60,6 +60,7 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 !.vscode/settings.json
 .idea/
+.nova/
 *.swp
 *.swo
 *~
