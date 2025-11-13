@@ -1,0 +1,71 @@
+{
+  "id": "bug-tracker",
+  "name": "Bug Tracker",
+  "description": "Système de feedback intégré pour soumettre des bugs directement vers GitHub Issues",
+  "version": "1.0.0",
+  "author": "Stomy Team",
+  "icon": "Bug",
+  "enabled": false,
+  "permissions": [
+    "tauri:*",
+    "shell:*"
+  ],
+  "sidebar": {
+    "enabled": true,
+    "position": "bottom",
+    "color": "#ef4444",
+    "icon": "Bug"
+  },
+  "settings": {
+    "githubRepo": {
+      "type": "string",
+      "label": "Dépôt GitHub",
+      "description": "Format: owner/repo (ex: izo/Stomy)",
+      "placeholder": "owner/repo",
+      "required": true
+    },
+    "autoAssign": {
+      "type": "boolean",
+      "label": "Assignation automatique",
+      "description": "Assigner automatiquement les issues à un utilisateur",
+      "default": false
+    },
+    "assignee": {
+      "type": "string",
+      "label": "Assigné par défaut",
+      "description": "Nom d'utilisateur GitHub",
+      "placeholder": "username",
+      "showIf": "autoAssign"
+    },
+    "autoScreenshot": {
+      "type": "boolean",
+      "label": "Capture d'écran automatique",
+      "description": "Inclure automatiquement une capture d'écran",
+      "default": true
+    },
+    "collectSystemInfo": {
+      "type": "boolean",
+      "label": "Collecter les informations système",
+      "description": "Inclure OS, navigateur, résolution, etc.",
+      "default": true
+    },
+    "showInSidebar": {
+      "type": "boolean",
+      "label": "Afficher dans la sidebar",
+      "description": "Afficher l'onglet Bug Tracker dans la sidebar",
+      "default": true
+    }
+  },
+  "dependencies": {
+    "html2canvas": "^1.4.1"
+  },
+  "backend": {
+    "type": "rust",
+    "file": "bug_tracker_commands.rs",
+    "commands": [
+      "github_auth_status",
+      "github_create_issue",
+      "github_test_connection"
+    ]
+  }
+}

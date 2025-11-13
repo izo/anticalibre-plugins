@@ -107,6 +107,13 @@ Settings are defined in the plugin's `settings` property and typed with an inter
 - **Versioning**: Follow semantic versioning for plugin versions
 - **Enabled by default**: Only kobo-sync is enabled by default (most plugins are `enabled: false`)
 
+## Assets Directory
+
+The `assets/` directory contains custom SVG icons for plugins:
+- Icons use different colors to visually distinguish plugin types (export, sync, conversion, etc.)
+- These are custom-designed icons beyond the standard Lucide icon set
+- When creating new plugin categories, add corresponding colored SVG icons to `assets/`
+
 ## Type Import Paths
 
 Plugin type imports vary by directory depth:
