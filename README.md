@@ -1,6 +1,6 @@
-# Anticalibre Plugins
+# Stomy Plugins
 
-This repository contains core plugins for [Anticalibre](https://github.com/izo/Anticalibre), the macOS ebook management application.
+This repository contains core plugins for [Stomy](https://github.com/izo/Stomy), the macOS ebook management application.
 
 ## Available Plugins
 
@@ -131,7 +131,7 @@ interface PluginAction {
 
 ### Accessing Services
 
-Plugins can access Anticalibre services:
+Plugins can access Stomy services:
 
 ```typescript
 import { dbService } from '@/services';
@@ -231,7 +231,7 @@ icon: 'Puzzle'           // Generic plugin icon
      // ... other plugins
    }
    \`\`\`
-3. Run Anticalibre in development mode: \`npm run tauri:dev\`
+3. Run Stomy in development mode: \`npm run tauri:dev\`
 4. Navigate to Settings > Plugins
 5. Enable your plugin and test its functionality
 
@@ -252,12 +252,12 @@ Pull requests for new plugins will be reviewed for:
 - **Code quality**: Clean, well-documented TypeScript
 - **Security**: No malicious code or security vulnerabilities
 - **Functionality**: Works as described, handles errors gracefully
-- **UI/UX**: Follows Anticalibre design patterns
+- **UI/UX**: Follows Stomy design patterns
 - **Performance**: Doesn't negatively impact app performance
 
 ## Core Plugin Maintenance
 
-This repository is maintained by the Anticalibre team. Core plugins are:
+This repository is maintained by the Stomy team. Core plugins are:
 - Thoroughly tested
 - Maintained with app updates
 - Automatically loaded by default
@@ -267,9 +267,9 @@ This repository is maintained by the Anticalibre team. Core plugins are:
 
 For questions or issues:
 - **Plugin development**: Open an issue in this repository
-- **Anticalibre bugs**: Open an issue in [main repository](https://github.com/izo/Anticalibre/issues)
+- **Stomy bugs**: Open an issue in [main repository](https://github.com/izo/Stomy/issues)
 - **Feature requests**: Discuss in main repository discussions
 
 ## License
 
-Same as Anticalibre - Internal use only.
+Same as Stomy - Internal use only.

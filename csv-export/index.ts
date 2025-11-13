@@ -74,7 +74,7 @@ export const csvExportPlugin: ExportPlugin = {
   name: 'Export CSV',
   description: 'Exporte la bibliothèque au format CSV',
   version: '1.0.0',
-  author: 'Anticalibre Team',
+  author: 'Stomy Team',
   icon: 'FileSpreadsheet',
 
   // Configuration

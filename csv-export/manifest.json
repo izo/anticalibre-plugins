@@ -3,7 +3,7 @@
   "name": "Export CSV",
   "description": "Exporte la bibliothèque au format CSV avec support UTF-8",
   "version": "1.0.0",
-  "author": "Anticalibre Team",
+  "author": "Stomy Team",
   "icon": "FileSpreadsheet",
   "repository": "",
   "permissions": ["fs:write"],

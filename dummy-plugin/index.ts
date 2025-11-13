@@ -12,7 +12,7 @@ export const dummyPlugin: Plugin = {
   name: 'Plugin Dummy',
   description: 'Plugin de test pour démonstration',
   version: '1.0.0',
-  author: 'Anticalibre Team',
+  author: 'Stomy Team',
   icon: 'TestTube',
 
   // Configuration
