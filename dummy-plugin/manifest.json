@@ -1,11 +1,13 @@
 {
-  "id": "dummy-plugin",
-  "name": "Plugin Dummy",
-  "description": "Plugin de test pour démonstration du système de plugins",
-  "version": "1.0.0",
+  "id": "plugin-docs",
+  "name": "Plugin Documentation",
+  "description": "Spécifications complètes, guide de développement et exemples pour créer des plugins Stomy",
+  "version": "2.0.0",
   "author": "Stomy Team",
-  "icon": "TestTube",
-  "repository": "",
+  "icon": "DocumentTextRegular",
+  "repository": "https://github.com/izo/stomy-plugins",
   "permissions": [],
-  "dependencies": []
+  "dependencies": [],
+  "tags": ["documentation", "reference", "examples", "development"],
+  "category": "developer-tools"
 }
