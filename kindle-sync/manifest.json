@@ -1,11 +1,62 @@
 {
   "id": "kindle-sync",
   "name": "Kindle Sync",
-  "description": "Synchronize your ebook library with Amazon Kindle devices via USB. Automatically converts EPUB to MOBI format.",
   "version": "1.0.0",
+  "description": "Synchronize your ebook library with Amazon Kindle devices via USB. Automatically converts EPUB to MOBI format.",
   "author": "Stomy Team",
-  "icon": "BookOpen",
-  "repository": "",
+  "license": "MIT",
+  "icon": "BookOpen24Regular",
+  "homepage": "https://github.com/izo/stomy-plugins",
+  "repository": "https://github.com/izo/stomy-plugins/tree/main/kindle-sync",
+
+  "main": "index.ts",
   "permissions": ["fs:read", "fs:write", "tauri:*"],
-  "dependencies": []
+  "dependencies": {},
+
+  "categories": ["sync", "device", "conversion"],
+  "tags": ["kindle", "sync", "usb", "mobi", "conversion", "e-reader"],
+
+  "settings": {
+    "autoConvert": {
+      "type": "boolean",
+      "default": true,
+      "description": "Automatically convert EPUB to MOBI"
+    },
+    "deleteAfterConvert": {
+      "type": "boolean",
+      "default": false,
+      "description": "Delete original EPUB after conversion"
+    },
+    "preferredFormat": {
+      "type": "string",
+      "default": "mobi",
+      "enum": ["mobi", "azw3"],
+      "description": "Preferred output format for Kindle"
+    },
+    "targetFolder": {
+      "type": "string",
+      "default": "documents",
+      "description": "Target folder on Kindle device"
+    },
+    "showNotifications": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show notifications when syncing"
+    }
+  },
+
+  "actions": [
+    {
+      "id": "sync-device",
+      "label": "Sync to Kindle",
+      "icon": "RefreshCw",
+      "context": "library"
+    },
+    {
+      "id": "convert-book",
+      "label": "Convert to MOBI",
+      "icon": "FileCode",
+      "context": "book"
+    }
+  ]
 }

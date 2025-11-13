@@ -1,0 +1,56 @@
+{
+  "id": "open-library",
+  "name": "Open Library",
+  "version": "1.0.0",
+  "description": "Automatically enriches your ebook metadata with information from Open Library, including descriptions, covers, publishers, and more.",
+  "author": "Stomy Team",
+  "license": "MIT",
+  "icon": "BookOpen24Regular",
+  "homepage": "https://openlibrary.org",
+  "repository": "https://github.com/izo/stomy-plugins/tree/main/open-library",
+
+  "main": "index.ts",
+  "permissions": [],
+  "dependencies": {},
+
+  "categories": ["metadata", "enrichment"],
+  "tags": ["open-library", "metadata", "books", "api"],
+
+  "settings": {
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Enable automatic metadata enrichment"
+    },
+    "autoEnrich": {
+      "type": "boolean",
+      "default": true,
+      "description": "Automatically enrich books when imported"
+    },
+    "preferISBN": {
+      "type": "boolean",
+      "default": true,
+      "description": "Prefer ISBN lookup over title/author search"
+    },
+    "maxSubjects": {
+      "type": "number",
+      "default": 10,
+      "description": "Maximum number of subjects/tags to fetch"
+    },
+    "coverSize": {
+      "type": "string",
+      "default": "L",
+      "enum": ["S", "M", "L"],
+      "description": "Cover image size (S=Small, M=Medium, L=Large)"
+    }
+  },
+
+  "actions": [
+    {
+      "id": "enrich-metadata",
+      "label": "Enrich with Open Library",
+      "icon": "RefreshCw",
+      "context": "book"
+    }
+  ]
+}

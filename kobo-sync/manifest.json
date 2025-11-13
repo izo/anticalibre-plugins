@@ -1,11 +1,56 @@
 {
   "id": "kobo-sync",
   "name": "Kobo Sync",
-  "description": "Synchronize your ebook library with Kobo e-reader devices via USB. Native support for EPUB format.",
   "version": "1.0.0",
+  "description": "Synchronize your ebook library with Kobo e-reader devices via USB. Native support for EPUB format.",
   "author": "Stomy Team",
-  "icon": "BookOpen",
-  "repository": "",
+  "license": "MIT",
+  "icon": "BookOpen24Regular",
+  "homepage": "https://github.com/izo/stomy-plugins",
+  "repository": "https://github.com/izo/stomy-plugins/tree/main/kobo-sync",
+
+  "main": "index.ts",
   "permissions": ["fs:read", "fs:write", "tauri:*"],
-  "dependencies": []
+  "dependencies": {},
+
+  "categories": ["sync", "device"],
+  "tags": ["kobo", "sync", "usb", "epub", "e-reader"],
+
+  "settings": {
+    "targetFolder": {
+      "type": "string",
+      "default": ".kobo",
+      "description": "Target folder on Kobo device for synced books"
+    },
+    "showNotifications": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show notifications when syncing"
+    },
+    "autoEject": {
+      "type": "boolean",
+      "default": false,
+      "description": "Automatically eject device after sync"
+    },
+    "syncMetadata": {
+      "type": "boolean",
+      "default": true,
+      "description": "Sync metadata along with books"
+    }
+  },
+
+  "actions": [
+    {
+      "id": "sync-device",
+      "label": "Sync to Kobo",
+      "icon": "RefreshCw",
+      "context": "library"
+    },
+    {
+      "id": "detect-device",
+      "label": "Detect Kobo Device",
+      "icon": "Search",
+      "context": "settings"
+    }
+  ]
 }

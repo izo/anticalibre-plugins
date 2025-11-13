@@ -1,11 +1,47 @@
 {
   "id": "csv-export",
-  "name": "Export CSV",
-  "description": "Exporte la bibliothèque au format CSV avec support UTF-8",
+  "name": "CSV Export",
   "version": "1.0.0",
+  "description": "Export your entire library to a CSV file with all book metadata, perfect for backup or external analysis.",
   "author": "Stomy Team",
-  "icon": "FileSpreadsheet",
-  "repository": "",
+  "license": "MIT",
+  "icon": "DocumentTable24Regular",
+  "homepage": "https://github.com/izo/stomy-plugins",
+  "repository": "https://github.com/izo/stomy-plugins/tree/main/csv-export",
+
+  "main": "index.ts",
   "permissions": ["fs:write"],
-  "dependencies": []
+  "dependencies": {},
+
+  "categories": ["export", "tools"],
+  "tags": ["csv", "export", "backup", "spreadsheet"],
+
+  "settings": {
+    "includeCovers": {
+      "type": "boolean",
+      "default": false,
+      "description": "Include cover image paths in export"
+    },
+    "encoding": {
+      "type": "string",
+      "default": "utf-8",
+      "enum": ["utf-8", "utf-8-bom", "iso-8859-1"],
+      "description": "CSV file encoding"
+    },
+    "delimiter": {
+      "type": "string",
+      "default": ",",
+      "enum": [",", ";", "\t"],
+      "description": "CSV field delimiter"
+    }
+  },
+
+  "actions": [
+    {
+      "id": "export-library",
+      "label": "Export to CSV",
+      "icon": "DocumentTable24Regular",
+      "context": "library"
+    }
+  ]
 }
