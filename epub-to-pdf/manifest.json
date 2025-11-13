@@ -1,0 +1,44 @@
+{
+  "id": "epub-to-pdf",
+  "name": "EPUB to PDF",
+  "description": "Convert EPUB files to PDF format. Select multiple books via right-click and save them anywhere on your system.",
+  "version": "1.0.0",
+  "author": "Stomy Team",
+  "repository": "https://github.com/izo/stomy-plugins",
+  "icon": "FileText",
+  "enabled": false,
+  "permissions": [
+    "fs:read",
+    "fs:write",
+    "dialog:*",
+    "tauri:*"
+  ],
+  "requires": {
+    "stomy": ">=1.0.0"
+  },
+  "external_dependencies": [
+    {
+      "name": "Calibre",
+      "description": "ebook-convert command-line tool",
+      "url": "https://calibre-ebook.com/download",
+      "required": false,
+      "alternative": "Pandoc"
+    },
+    {
+      "name": "Pandoc",
+      "description": "Universal document converter",
+      "url": "https://pandoc.org/installing.html",
+      "required": false,
+      "alternative": "Calibre"
+    }
+  ],
+  "keywords": [
+    "epub",
+    "pdf",
+    "conversion",
+    "ebook",
+    "format",
+    "export"
+  ],
+  "category": "conversion"
+}

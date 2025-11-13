@@ -28,6 +28,15 @@ Synchronize your ebook library with Amazon Kindle devices via USB. Features:
 - Support for all Kindle models with USB mass storage
 - Configurable conversion settings
 
+### epub-to-pdf
+Convert EPUB files to PDF format directly from Stomy. Features:
+- Right-click context menu integration
+- Batch conversion of multiple books
+- Uses Calibre or Pandoc for high-quality conversion
+- Flexible output location (desktop, custom folders)
+- Configurable page size, margins, and quality settings
+- Preserves images, TOC, and formatting
+
 ## Plugin Development Guide
 
 ### Plugin Structure
