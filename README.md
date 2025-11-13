@@ -1,6 +1,6 @@
 # Stomy Plugins
 
-This repository contains core plugins for [Stomy](https://github.com/izo/Stomy), the macOS ebook management application.
+This repository contains core plugins for [Stomy](https://github.com/izo/Stomy), the cross-platform ebook management application for macOS, Windows, and Linux.
 
 ## Available Plugins
 
@@ -13,6 +13,20 @@ Example plugin demonstrating the plugin API. Shows how to:
 
 ### csv-export
 Export your entire library to a CSV file with all book metadata including title, author, series, format, and file paths.
+
+### kobo-sync
+**Enabled by default.** Synchronize your ebook library with Kobo e-reader devices via USB. Features:
+- Automatic Kobo device detection
+- Native support for EPUB, PDF, MOBI, CBZ formats
+- Smart sync with duplicate detection
+- Device storage monitoring
+
+### kindle-sync
+Synchronize your ebook library with Amazon Kindle devices via USB. Features:
+- Automatic Kindle device detection
+- EPUB to MOBI conversion using iepub library
+- Support for all Kindle models with USB mass storage
+- Configurable conversion settings
 
 ## Plugin Development Guide
 
