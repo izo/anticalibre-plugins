@@ -1,0 +1,98 @@
+{
+  "id": "generic-sync",
+  "name": "Generic Device Sync",
+  "version": "1.0.0",
+  "description": "Universal sync plugin for PocketBook, Sony Reader, Cybook, BeBook and other e-readers with USB Mass Storage support",
+  "author": "Stomy Team",
+  "license": "MIT",
+  "icon": "TabletRegular",
+  "homepage": "https://github.com/izo/stomy-plugins",
+  "repository": "https://github.com/izo/stomy-plugins/tree/main/optional/generic-sync",
+
+  "main": "index.ts",
+  "permissions": ["fs", "dialog"],
+  "dependencies": {},
+
+  "categories": ["sync", "device", "universal"],
+  "tags": ["pocketbook", "sony", "cybook", "bebook", "sync", "usb", "e-reader", "generic"],
+
+  "settings": {
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Enable generic device sync"
+    },
+    "autoDetect": {
+      "type": "boolean",
+      "default": true,
+      "description": "Automatically detect connected devices"
+    },
+    "supportedDevices": {
+      "type": "array",
+      "default": ["pocketbook", "sony-prs", "cybook", "bebook"],
+      "description": "Device types to detect and sync with"
+    },
+    "defaultSyncPath": {
+      "type": "string",
+      "default": "/Books/",
+      "description": "Default sync path for unknown devices"
+    },
+    "showNotifications": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show notifications for device events"
+    }
+  },
+
+  "actions": [
+    {
+      "id": "sync-to-device",
+      "label": "Sync to Device",
+      "icon": "ArrowSyncRegular",
+      "context": "book"
+    },
+    {
+      "id": "sync-selected",
+      "label": "Sync Selected Books",
+      "icon": "ArrowSyncRegular",
+      "context": "library"
+    },
+    {
+      "id": "detect-devices",
+      "label": "Detect Devices",
+      "icon": "SearchRegular",
+      "context": "settings"
+    }
+  ],
+
+  "supportedDevices": [
+    {
+      "name": "PocketBook",
+      "manufacturer": "PocketBook International",
+      "compatibility": "75%",
+      "models": "All USB Mass Storage models",
+      "formats": ["EPUB", "PDF", "FB2", "MOBI", "CBZ", "CBR", "TXT"]
+    },
+    {
+      "name": "Sony Reader PRS",
+      "manufacturer": "Sony",
+      "compatibility": "60%",
+      "models": "PRS-300, 350, 500, 505, 600, 650, 700",
+      "formats": ["EPUB", "PDF", "TXT"]
+    },
+    {
+      "name": "Cybook",
+      "manufacturer": "Bookeen",
+      "compatibility": "70%",
+      "models": "Gen3, Opus, Orizon, Odyssey",
+      "formats": ["EPUB", "PDF", "FB2", "TXT", "HTML"]
+    },
+    {
+      "name": "BeBook",
+      "manufacturer": "BeBook",
+      "compatibility": "70%",
+      "models": "BeBook, BeBook Mini",
+      "formats": ["EPUB", "PDF", "FB2", "TXT", "HTML"]
+    }
+  ]
+}
