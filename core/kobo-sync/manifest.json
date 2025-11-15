@@ -1,8 +1,8 @@
 {
   "id": "kobo-sync",
   "name": "Kobo Sync",
-  "version": "1.0.0",
-  "description": "Synchronize your ebook library with Kobo e-reader devices via USB. Native support for EPUB format.",
+  "version": "2.0.0",
+  "description": "Synchronize your ebook library with Kobo e-reader devices via USB. Import reading progress, annotations, and vocabulary from KoboReader.sqlite database.",
   "author": "Stomy Team",
   "license": "MIT",
   "icon": "BookOpen24Regular",
@@ -36,6 +36,21 @@
       "type": "boolean",
       "default": true,
       "description": "Sync metadata along with books"
+    },
+    "syncReadingProgress": {
+      "type": "boolean",
+      "default": true,
+      "description": "Import reading progress from Kobo database (percent read, time spent, read status)"
+    },
+    "syncAnnotations": {
+      "type": "boolean",
+      "default": true,
+      "description": "Import highlights and annotations from Kobo"
+    },
+    "syncVocabulary": {
+      "type": "boolean",
+      "default": false,
+      "description": "Import vocabulary/dictionary lookups from Kobo"
     }
   },
 

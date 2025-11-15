@@ -10,14 +10,20 @@ import type {
   KoboInfo,
   KoboPluginSettings,
   SyncResult,
+  KoboBook,
+  KoboEvent,
+  KoboBookmark,
+  KoboVocabulary,
+  KoboLibraryData,
+  KoboSyncStats,
 } from './types';
 
 export const koboPlugin: Plugin = {
   id: 'kobo-sync',
   name: 'Kobo Sync',
   description:
-    'Synchronize your ebook library with Kobo e-reader devices via USB. Native support for EPUB format.',
-  version: '1.0.0',
+    'Synchronize your ebook library with Kobo e-reader devices via USB. Import reading progress, annotations, and vocabulary from KoboReader.sqlite database.',
+  version: '2.0.0',
   author: 'Stomy Team',
   icon: 'BookOpen',
   enabled: true, // Enabled by default since it's the primary device
@@ -29,6 +35,9 @@ export const koboPlugin: Plugin = {
     showNotifications: true,
     autoEject: false,
     syncMetadata: true,
+    syncReadingProgress: true,
+    syncAnnotations: true,
+    syncVocabulary: false,
   } as KoboPluginSettings,
 
   // Lifecycle hooks
@@ -74,6 +83,81 @@ export const koboPlugin: Plugin = {
       onClick: async (data?: any) => {
         console.log('[KoboPlugin] Sync to Kobo triggered', data);
         // This will be implemented in the SyncService integration
+      },
+    },
+    {
+      id: 'import-reading-progress',
+      label: 'Import Reading Progress from Kobo',
+      icon: 'CloudDownload',
+      context: 'global',
+      onClick: async () => {
+        try {
+          console.log('[KoboPlugin] Importing reading progress...');
+          const devices = await detectKoboDevices();
+
+          if (devices.length === 0) {
+            throw new Error('No Kobo device detected');
+          }
+
+          const devicePath = devices[0].path;
+          const libraryData = await getKoboLibraryData(devicePath);
+
+          console.log('[KoboPlugin] Imported:', {
+            books: libraryData.books.length,
+            events: libraryData.events.length,
+            bookmarks: libraryData.bookmarks.length,
+            vocabulary: libraryData.vocabulary.length,
+          });
+
+          return libraryData;
+        } catch (error) {
+          console.error('[KoboPlugin] Failed to import reading progress:', error);
+          throw error;
+        }
+      },
+    },
+    {
+      id: 'view-annotations',
+      label: 'View Kobo Annotations',
+      icon: 'TextQuote',
+      context: 'global',
+      onClick: async () => {
+        try {
+          const devices = await detectKoboDevices();
+
+          if (devices.length === 0) {
+            throw new Error('No Kobo device detected');
+          }
+
+          const bookmarks = await getKoboBookmarks(devices[0].path);
+          console.log('[KoboPlugin] Found', bookmarks.length, 'annotations');
+          return bookmarks;
+        } catch (error) {
+          console.error('[KoboPlugin] Failed to get annotations:', error);
+          throw error;
+        }
+      },
+    },
+    {
+      id: 'sync-vocabulary',
+      label: 'Import Vocabulary from Kobo',
+      icon: 'Book',
+      context: 'global',
+      onClick: async () => {
+        try {
+          const devices = await detectKoboDevices();
+
+          if (devices.length === 0) {
+            throw new Error('No Kobo device detected');
+          }
+
+          const vocabulary = await getKoboVocabulary(devices[0].path);
+          console.log('[KoboPlugin] Found', vocabulary.length, 'vocabulary words');
+          return vocabulary;
+        } catch (error) {
+          console.error('[KoboPlugin] Failed to get vocabulary:', error);
+          throw error;
+        }
       },
     },
   ],
@@ -145,6 +229,163 @@ export async function syncBookToKobo(
       success: false,
       error: error instanceof Error ? error.message : String(error),
     };
+  }
+}
+
+// ============================================================================
+// Database Reading Functions
+// ============================================================================
+
+/**
+ * Get all books from Kobo database
+ */
+export async function getKoboBooks(devicePath: string): Promise<KoboBook[]> {
+  try {
+    return await invoke<KoboBook[]>('get_kobo_books', { devicePath });
+  } catch (error) {
+    console.error('[KoboPlugin] Failed to get books:', error);
+    return [];
+  }
+}
+
+/**
+ * Get reading events from Kobo database
+ */
+export async function getKoboEvents(devicePath: string): Promise<KoboEvent[]> {
+  try {
+    return await invoke<KoboEvent[]>('get_kobo_events', { devicePath });
+  } catch (error) {
+    console.error('[KoboPlugin] Failed to get events:', error);
+    return [];
+  }
+}
+
+/**
+ * Get bookmarks and annotations from Kobo database
+ */
+export async function getKoboBookmarks(devicePath: string): Promise<KoboBookmark[]> {
+  try {
+    return await invoke<KoboBookmark[]>('get_kobo_bookmarks', { devicePath });
+  } catch (error) {
+    console.error('[KoboPlugin] Failed to get bookmarks:', error);
+    return [];
+  }
+}
+
+/**
+ * Get vocabulary words from Kobo database
+ */
+export async function getKoboVocabulary(devicePath: string): Promise<KoboVocabulary[]> {
+  try {
+    return await invoke<KoboVocabulary[]>('get_kobo_vocabulary', { devicePath });
+  } catch (error) {
+    console.error('[KoboPlugin] Failed to get vocabulary:', error);
+    return [];
+  }
+}
+
+/**
+ * Get all Kobo library data at once (optimized)
+ */
+export async function getKoboLibraryData(devicePath: string): Promise<KoboLibraryData> {
+  return await invoke<KoboLibraryData>('get_kobo_library_data', { devicePath });
+}
+
+/**
+ * Get reading progress for a specific book
+ */
+export async function getBookProgress(
+  devicePath: string,
+  isbn?: string,
+  title?: string
+): Promise<KoboBook | null> {
+  try {
+    return await invoke<KoboBook | null>('get_book_progress', {
+      devicePath,
+      isbn: isbn || null,
+      title: title || null,
+    });
+  } catch (error) {
+    console.error('[KoboPlugin] Failed to get book progress:', error);
+    return null;
+  }
+}
+
+// ============================================================================
+// Sync Utility Functions
+// ============================================================================
+
+/**
+ * Sync reading progress from Kobo to Stomy library
+ */
+export async function syncReadingProgress(
+  devicePath: string,
+  onProgress?: (stats: KoboSyncStats) => void
+): Promise<KoboSyncStats> {
+  const stats: KoboSyncStats = {
+    booksFound: 0,
+    booksUpdated: 0,
+    progressSynced: 0,
+    annotationsSynced: 0,
+    vocabularySynced: 0,
+    errors: 0,
+  };
+
+  try {
+    // Get all library data
+    const libraryData = await getKoboLibraryData(devicePath);
+    stats.booksFound = libraryData.books.length;
+
+    // TODO: This will be implemented when integrated with main Stomy app
+    // For now, just return the stats
+    console.log('[KoboPlugin] Sync stats:', stats);
+
+    if (onProgress) {
+      onProgress(stats);
+    }
+
+    return stats;
+  } catch (error) {
+    console.error('[KoboPlugin] Failed to sync reading progress:', error);
+    stats.errors++;
+    return stats;
+  }
+}
+
+/**
+ * Format reading time in human-readable format
+ */
+export function formatReadingTime(minutes: number): string {
+  if (minutes < 60) {
+    return `${minutes}min`;
+  }
+
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+
+  if (hours < 24) {
+    return mins > 0 ? `${hours}h ${mins}min` : `${hours}h`;
+  }
+
+  const days = Math.floor(hours / 24);
+  const remainingHours = hours % 24;
+
+  return remainingHours > 0 ? `${days}d ${remainingHours}h` : `${days}d`;
+}
+
+/**
+ * Get read status label
+ */
+export function getReadStatusLabel(status: number): string {
+  switch (status) {
+    case 0:
+      return 'Unread';
+    case 1:
+      return 'Reading';
+    case 2:
+      return 'Finished';
+    default:
+      return 'Unknown';
   }
 }
 
